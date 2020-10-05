@@ -16,14 +16,23 @@ class ApplicationController < Sinatra::Base
   get '/login' do
     if logged_in?
       redirect "/user/#{session[:id]}"
+    else
+      erb :login
     end
-    erb :login
   end
 
   get '/logout' do
     redirect_if_not_logged_in
     session.clear
     erb :login
+  end
+
+  get '/register' do
+    if logged_in?
+      redirect "/user/#{session[:id]}"
+    else
+      erb :register
+    end
   end
 
   helpers do

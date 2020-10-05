@@ -1,12 +1,46 @@
-This is the Home Page!
+<style>
+    table, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
 
-Signup
-Login
-Logout
+    th {
+        border: 1px solid black;
+    }
+</style>
 
-View my account -- '/profile'
+<!DOCTYPE html>
+<head>
+    <title>Game Bench</title>
 
-Add PC -- '/pc/new' if logged in
-Add Game benchmark -- '/game/new' if logged in and has pc
+</head>
+<body>
+    <h1>Game Bench Home Page!</h1>
 
-Table view of PC and game benchmarks
+    <% if !logged_in? %>
+        <a href="/register">Register</a><br>
+        <a href="/login">Log In</a>
+    <% end %><br>
+
+    <% if logged_in? %>
+        <a href="/logout">Log Out</a><br>
+        <a href="/users/<% session[:id] %>">View Profile</a>
+    <% end %><br>
+
+    <a href="/pcs/new">Add A New PC</a><br>
+    <a href="/games/new">Add A Game Benchmark</a><br>
+    <br>
+    <table width="100%">
+        <tr>
+            <th>Game</th>
+            <th>Avg FPS</th>
+            <th>Settings</th>
+            <th>Resolution</th>
+            <th>Processor</th>
+            <th>Graphics Card</th>
+            <th></th>
+        </th>
+    </table>
+</body>
+
+</html>
