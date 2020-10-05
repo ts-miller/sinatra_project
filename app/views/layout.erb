@@ -1,0 +1,29 @@
+<style>
+    table, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+        text-align: center;
+    }
+
+    th {
+        border: 1px solid black;
+    }
+</style>
+
+<html>
+  <head>
+    
+  </head>
+  <body>
+    <a href="/"><h2>Home</h2></a>
+    <% if !logged_in? %>
+        <a href="/register">Register</a><br>
+        <a href="/login">Log In</a><br>
+    <% else %>
+        <h4>Welcome <%= current_user.username %></h4>
+        <a href="/logout">Log Out</a><br>
+        <a href="/users/<%= session[:user_id] %>">View Profile</a><br>
+    <% end %><br>
+    <%= yield %>
+  </body>
+</html>

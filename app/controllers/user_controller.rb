@@ -5,8 +5,22 @@ class UserController < ApplicationController
         erb :'user/index'
     end
 
-    get '/users/new' do
-        erb :'user/new'
+    get '/register' do
+        if logged_in?
+          redirect "/user/#{session[:user_id]}"
+        else
+          erb :'user/register'
+        end
+    end
+
+    post '/users' do
+        if password_match?
+            new_user = User.create(name: params[:name], username: params[:username], password: params[:password])
+            session[:user_id] = new_user.id
+            redirect '/'
+        else
+            redirect '/register'
+        end
     end
 
     get '/users/:id' do

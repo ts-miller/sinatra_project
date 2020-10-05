@@ -10,6 +10,7 @@ class ApplicationController < Sinatra::Base
   end
 
   get '/' do
+    @games = Game.all
     erb :home
   end
 
@@ -27,24 +28,26 @@ class ApplicationController < Sinatra::Base
     erb :login
   end
 
-  get '/register' do
-    if logged_in?
-      redirect "/user/#{session[:id]}"
-    else
-      erb :register
-    end
-  end
+
 
   helpers do
 
     def logged_in?
-      !!session[:username]
+      !!session[:user_id]
     end
 
     def redirect_if_not_logged_in
       unless logged_in?
         redirect '/login'
       end
+    end
+
+    def current_user
+      User.find_by_id(session[:user_id])
+    end
+
+    def password_match?
+      params[:password] == params[:confirm]
     end
 
   end

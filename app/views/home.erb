@@ -1,14 +1,3 @@
-<style>
-    table, td {
-        border: 1px solid black;
-        border-collapse: collapse;
-    }
-
-    th {
-        border: 1px solid black;
-    }
-</style>
-
 <!DOCTYPE html>
 <head>
     <title>Game Bench</title>
@@ -17,15 +6,7 @@
 <body>
     <h1>Game Bench Home Page!</h1>
 
-    <% if !logged_in? %>
-        <a href="/register">Register</a><br>
-        <a href="/login">Log In</a>
-    <% end %><br>
-
-    <% if logged_in? %>
-        <a href="/logout">Log Out</a><br>
-        <a href="/users/<% session[:id] %>">View Profile</a>
-    <% end %><br>
+    
 
     <a href="/pcs/new">Add A New PC</a><br>
     <a href="/games/new">Add A Game Benchmark</a><br>
@@ -38,8 +19,21 @@
             <th>Resolution</th>
             <th>Processor</th>
             <th>Graphics Card</th>
+            <th>Username</th>
             <th></th>
-        </th>
+        </tr>
+        <% @games.each do |game| %>
+            <tr>
+                <td><%= game.name %></td>
+                <td><%= game.avg_fps %></td>
+                <td><%= game.quality %></td>
+                <td><%= game.resolution_x %> x <%= game.resolution_y %></td>
+                <td><%= game.pc.cpu_brand %> <%= game.pc.cpu_model %></td>
+                <td><%= game.pc.gpu_brand %> <%= game.pc.gpu_model %></td>
+                <td><a href="/users/<%= game.pc.user.id %>"><%= game.pc.user.username %></a></td>
+                <td><a href="/games/<%= game.id %>">Details</a></td>
+            </tr>
+        <% end %>
     </table>
 </body>
 

@@ -1,1 +1,45 @@
-<p>User <%= @user.username %> show page!</p>
+<header>
+    <title><%= @user.username %>'s Profile</title>
+</header>
+<body>
+    <h1><%= @user.username.capitalize %>'s Profile!</h1>
+    <h2>PCs 
+        <% if @user.id == session[:user_id] %>
+            || <a href="/pcs/new">Add PC</a>
+        <% end %></h2>
+    <table width="100%">
+        <tr>
+            <th>Processor</th>
+            <th>Graphics Card</th>
+            <th>Ram</th>
+            <th>Storage</th>
+            <th>Power Supply</th>
+        </tr>
+        <% @user.pcs.each do |pc| %>
+            <tr>
+                <td><%= pc.cpu_brand %> <%= pc.cpu_model %></td>
+                <td><%= pc.gpu_brand %> <%= pc.gpu_model %></td>
+                <td><%= pc.ram %></td>
+                <td><%= pc.storage_size %> <%= pc.storage_type %></td>
+                <td><%= pc.psu %> <%= pc.psu_watts %> <%= "80 Plus" if pc.psu_80plus %></td>
+            </tr>
+        <% end %>
+
+    <h2>Game Benchmarks
+        <% if @user.id == session[:user_id] %>
+            || <a href="/games/new">Add Benchmark</a>
+        <% end %></h2>
+    <p>list of game benches</p>
+</body>
+
+ t.string  "cpu_brand"
+    t.string  "cpu_model"
+    t.integer "ram"
+    t.string  "gpu_brand"
+    t.string  "gpu_model"
+    t.string  "storage_type"
+    t.string  "storage_size"
+    t.string  "psu"
+    t.string  "psu_watts"
+    t.boolean "psu_80plus"
+    t.integer "user_id"
