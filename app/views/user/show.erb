@@ -24,6 +24,7 @@
                 <td><%= pc.psu %> <%= pc.psu_watts %> <%= "80 Plus" if pc.psu_80plus %></td>
             </tr>
         <% end %>
+    </table>
 
     <h2>Game Benchmarks
         <% if @user.id == session[:user_id] %>

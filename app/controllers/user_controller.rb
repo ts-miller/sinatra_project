@@ -19,6 +19,7 @@ class UserController < ApplicationController
             session[:user_id] = new_user.id
             redirect '/'
         else
+            # flash[:error] = "Passwords did not match."
             redirect '/register'
         end
     end

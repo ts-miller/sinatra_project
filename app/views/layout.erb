@@ -12,7 +12,7 @@
 
 <html>
   <head>
-    
+    <title>Game Bench</title>
   </head>
   <body>
     <a href="/"><h2>Home</h2></a>
@@ -24,6 +24,8 @@
         <a href="/logout">Log Out</a><br>
         <a href="/users/<%= session[:user_id] %>">View Profile</a><br>
     <% end %><br>
+
     <%= yield %>
+    
   </body>
 </html>
