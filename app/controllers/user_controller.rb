@@ -15,12 +15,15 @@ class UserController < ApplicationController
 
     post '/users' do
         if password_match?
-            new_user = User.create(name: params[:name], username: params[:username], password: params[:password])
-            session[:user_id] = new_user.id
-            redirect '/'
+            new_user = User.new(name: params[:name], username: params[:username], password: params[:password])
+            if new_user.save
+                redirect '/login'
+            else
+                redirect '/failure'
+            end
         else
             # flash[:error] = "Passwords did not match."
-            redirect '/register'
+            redirect '/failure'
         end
     end
 
