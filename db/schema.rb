@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20201005114455) do
+ActiveRecord::Schema.define(version: 20201007135759) do
 
   create_table "games", force: :cascade do |t|
     t.string  "name"
@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(version: 20201005114455) do
     t.string  "psu_watts"
     t.boolean "psu_80plus"
     t.integer "user_id"
+    t.string  "name"
   end
 
   create_table "users", force: :cascade do |t|

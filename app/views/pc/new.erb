@@ -1,1 +1,81 @@
-New PC page!
+<body>
+    <h1>Add a New PC!</h1>
+    <form method="post" action="/pcs">
+        
+        <label for="cpu_brand">CPU brand: </label>
+        <select name="cpu_brand">
+            <option disabled selected value> -- select an option -- </option>
+            <option value="Intel">Intel</option>
+            <option value="AMD">AMD</option>
+            <option value="Other">Other</option>
+        </select><br><br>
+        
+        <label for="cpu_model">CPU model: </label><input type="text" name="cpu_model"><br><br>
+        
+        <label for="ram">RAM amount:</label>
+        <select name="ram">
+            <option disabled selected value> -- select an option -- </option>
+            <option value=2>2 GB</option>
+            <option value=4>4 GB</option>
+            <option value=6>6 GB</option>
+            <option value=8>8 GB</option>
+            <option value=12>12 GB</option>
+            <option value=16>16 GB</option>
+            <option value=32>32 GB</option>
+            <option value=64>64 GB</option>
+        </select><br><br>
+        
+        <label for="gpu_brand">GPU Brand: </label>
+        
+        <select name="gpu_brand">
+            <option disabled selected value> -- select an option -- </option>
+            <option value="Intel">Intel</option>
+            <option value="AMD">AMD</option>
+            <option value="Other">Other</option>
+        </select><br><br>
+        
+        <label for="gpu_model">GPU Model: </label><input type="text" name="gpu_model"><br><br>
+        
+        <label for="storage_type">Storage Type: </label>
+        <select name="storage_type">
+            <option disabled selected value> -- select an option -- </option>
+            <option value="SSD">Solid State Drive</option>
+            <option value="HDD">Hard Disk Drive</option>
+            <option value="SSD/HDD Hybrid">SSD/HDD Hybrid</option>
+        </select><br><br>
+        
+        <label for="storage_size">Storage Size: </label>
+        <select name="storage_size">
+            <option disabled selected value> -- select an option -- </option>
+            <option value="80 GB">80 GB</option>
+            <option value="120 GB">120 GB</option>
+            <option value="320 GB">320 GB</option>
+            <option value="500 GB">500 GB</option>
+            <option value="1 TB">1 TB</option>
+            <option value="1.5 TB">1.5 TB</option>
+            <option value="2 TB">2 TB</option>
+            <option value="3 TB">3 TB</option>
+            <option value="4 TB">4 TB</option>
+            <option value=">4 TB">&gt;4 TB</option>
+        </select><br><br>
+        
+        <label for="psu">PSU Brand: </label>
+        <select name="psu">
+            <option disabled selected value> -- select an option -- </option>
+            <% power_supplies.each do |p| %>
+                <option value=<%= p %>><%= p %></option>
+            <% end %>
+        </select><br><br>
+        
+        <label for="psu_watts">Wattage (only enter number): </label><input type="text" name="psu_watts"><label>Watts</label><br><br>
+        
+        <label for="psu_80plus">Is it 80 plus certified? </label>
+        <select name="psu_80plus">
+            <option disabled selected value> -- select an option -- </option>
+            <option value=true>Yes</option>
+            <option value=false>No</option>
+        </select><br><br>
+        
+        <input type="submit" value="Create PC">
+    </form>
+</body>

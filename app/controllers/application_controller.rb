@@ -14,37 +14,12 @@ class ApplicationController < Sinatra::Base
     erb :home
   end
 
-  get '/login' do
-    if logged_in?
-      redirect "/user/#{session[:id]}"
-    else
-      erb :login
-    end
-  end
 
-  post '/login' do
-    user = User.find_by(username: params[:username])
 
-    if user && user.authenticate(params[:password])
-      session[:user_id] = user.id
-      redirect '/success'
-    else
-      redirect '/failure'
-    end
-  end
+  get '/:model/:id/delete' do
+    @item = params[:model].singularize.capitalize.constantize.find_by_id(params[:id])
 
-  get '/logout' do
-    redirect_if_not_logged_in
-    session.clear
-    erb :login
-  end
-
-  get '/success' do
-    erb :success
-  end
-
-  get '/failure' do
-    erb :failure
+    erb :delete_confirm
   end
 
 
@@ -61,12 +36,41 @@ class ApplicationController < Sinatra::Base
       end
     end
 
+    def redirect_if_not_owner
+       
+    end
+
     def current_user
       User.find_by_id(session[:user_id])
     end
 
     def password_match?
       params[:password] == params[:confirm]
+    end
+
+    def failed_login
+      session[:message] = "The username or password was incorrect. Please Try again!"
+    end
+
+    def power_supplies
+      psus = ["AMD", "Antec", "Apevia", "ApexGaming", "Argon", "Forty", "ASUS", "AVAWO", "be", 
+      "quiet", "Cable", "Matters", "CableMod", "COMeap", "Cooler", "Master", "Coolmax", "Corsair", 
+      "Dell", "ElectronicsSalon", "eTopxizu", "EVGA", "EZDIYFAB", "FOR", "DELL", "Fuhengli", 
+      "GAMEMAX", "Gigabyte", "HP", "inShareplus", "LABISTS", "MEAN", "WELL", "MEISHILE", "Microsoft", 
+      "Montech", "NZXT", "Odyson", "Optimal", "Shop", "Padarsey", "Phanteks", "Pig", "Hog", "POINWER",
+       "Raspberry", "RetroArcadeus", "SUnion", "Seasonic", "Siglent", "Technologies", "SilverStone", 
+       "Technology", "StarTech", "SUPER", "FLOWER", "Super", "Flower", "SUPERNIGHT", "Thermaltake", 
+       "Traxxas", "Treedix", "YEECHUN"]
+    end
+
+    def multiple_pcs?(output=nil)
+      if output
+        if @user.pcs.count > 1
+          output
+        end
+      else
+        @user.pcs.count > 1
+      end
     end
 
   end

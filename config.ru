@@ -7,4 +7,5 @@ end
 use UserController
 use PcController
 use GameController
+use SessionController
 run ApplicationController
