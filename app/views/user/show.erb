@@ -2,7 +2,7 @@
     <title><%= @user.username %>'s Profile</title>
 </header>
 <body>
-    <h1><%= @user.username.capitalize %>'s Profile!</h1>
+    <h1><%= @user.name %>'s Profile!</h1>
     <h2>PC<%= multiple_pcs?('s') %> 
         <% if @user.id == session[:user_id] %>
             || <a href="/pcs/new">Add PC</a>
@@ -15,8 +15,8 @@
             <th>Ram</th>
             <th>Storage</th>
             <th>Power Supply</th>
-            <th></th>
-            <th></th>
+            <th>&#10003;</th>
+            <th>&#10003;</th>
         </tr>
         <% @user.pcs.each do |pc| %>
             <tr>
@@ -28,13 +28,16 @@
                 <td><%= pc.psu %> <%= pc.psu_watts %> <%= "80 Plus" if pc.psu_80plus %></td>
                 <% if @user == current_user %>
                     <td><a href="/pcs/<%= pc.id %>/edit">Edit</a></td>
-                    <td><a href="/pcs/<%= pc.id %>/delete">Delete</a></td>
+                    <td><form method="post" action="/pcs/<%= pc.id %>">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <input type="submit" value="Delete"></form>
+                    </td>
                 <% end %>
             </tr>
         <% end %>
     </table>
 
-    <h3>Game Benchmarks
+    <h3>Game Benchmarks || <a href="/games">View 
     <% if @user.id == session[:user_id] %>
         || <a href="/games/new">Add Benchmark</a>
     <% end %></h3>
@@ -45,8 +48,8 @@
             <th>Quality</th>
             <th>Resolution</th>
             <th>Average FPS</th>
-            <th></th>
-            <th></th>
+            <th>&#10003;</th>
+            <th>&#10003;</th>
         </tr>
         <% @user.games.each do |game| %>
             <tr>
@@ -56,8 +59,11 @@
                 <td><%= game.resolution_x %> x <%= game.resolution_y %></td>
                 <td><%= game.avg_fps %></td>
                 <% if @user == current_user %>
-                    <td><a href="">Edit</a></td>
-                    <td><a href="/games/<%= game.id %>/delete">Delete</a></td>
+                    <td><a href="/games/<%= game.id %>/edit">Edit</a></td>
+                    <td><form method="post" action="/games/<%= game.id %>">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <input type="submit" value="Delete"></form>
+                    </td>
                 <% end %>
             </tr>
         <% end %>

@@ -14,13 +14,19 @@ class ApplicationController < Sinatra::Base
     erb :home
   end
 
-
-
-  get '/:model/:id/delete' do
-    @item = params[:model].singularize.capitalize.constantize.find_by_id(params[:id])
-
-    erb :delete_confirm
-  end
+  # get '/:model/:id/delete' do
+  #   redirect_if_not_logged_in
+  #   @item = params[:model].singularize.capitalize.constantize.find_by_id(params[:id])
+  #   if @item
+  #     if @item.user == current_user
+  #       erb :delete_confirm
+  #     else
+  #       redirect '/login'
+  #     end
+  #   else
+  #     redirect '/failure'
+  #   end
+  # end
 
 
 

@@ -1,7 +1,9 @@
 <body>
     <h1>Add a New PC!</h1>
     <form method="post" action="/pcs">
-        
+
+        <label for="name">Nickname (optional): </label><input type="text" name="name"><br><br>    
+
         <label for="cpu_brand">CPU brand: </label>
         <select name="cpu_brand">
             <option disabled selected value> -- select an option -- </option>
@@ -29,7 +31,7 @@
         
         <select name="gpu_brand">
             <option disabled selected value> -- select an option -- </option>
-            <option value="Intel">Intel</option>
+            <option value="Nvidia">Nvidia</option>
             <option value="AMD">AMD</option>
             <option value="Other">Other</option>
         </select><br><br>
@@ -67,7 +69,7 @@
             <% end %>
         </select><br><br>
         
-        <label for="psu_watts">Wattage (only enter number): </label><input type="text" name="psu_watts"><label>Watts</label><br><br>
+        <label for="psu_watts">Wattage (only enter number): </label><input type="number" name="psu_watts"><label>Watts</label><br><br>
         
         <label for="psu_80plus">Is it 80 plus certified? </label>
         <select name="psu_80plus">

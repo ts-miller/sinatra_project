@@ -1,36 +1,37 @@
-<style>
-    table, td {
-        border: 1px solid black;
-        border-collapse: collapse;
-        text-align: center;
-    }
-
-    th {
-        border: 1px solid black;
-    }
-
-    .center {
-      margin-left: auto;
-      margin-right: auto;
-    }
-</style>
-
-<html>
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8 oldie" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
   <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
     <title>Game Bench</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/stylesheets/main.css" />
   </head>
   <body>
-    <a href="/"><h2>Home</h2></a>
-    <% if !logged_in? %>
+
+
+    <div class="wrapper">
+      <a href="/"><h2>Home</h2></a>
+      <% if !logged_in? %>
         <a href="/register">Register</a><br>
         <a href="/login">Log In</a><br>
-    <% else %>
-        <h4>Welcome <%= current_user.username %></h4>
+      <% else %>
+        <h4>Welcome <%= current_user.name %></h4>
         <a href="/logout">Log Out</a><br>
         <a href="/users/<%= session[:user_id] %>">View Profile</a><br>
-    <% end %><br>
-
-    <%= yield %>
-    
+      <% end %>
+      <%= yield %>
+      <footer class="branding">
+        <small>&copy; Tyler Miller : 2020 <strong></small>
+      </footer>
+    </div>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <!--[if lt IE 7]>
+      <script src="//ajax.googleapis.com/ajax/libs/chrome-frame/1.0.2/CFInstall.min.js"></script>
+      <script>window.attachEvent("onload",function(){CFInstall.check({mode:"overlay"})})</script>
+    <![endif]-->
   </body>
 </html>

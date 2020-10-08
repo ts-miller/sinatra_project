@@ -5,7 +5,7 @@ class UserController < ApplicationController
         erb :'user/index'
     end
 
-    get '/register' do
+    get '/register' do # '/users/new'
         if logged_in?
           redirect "/user/#{session[:user_id]}"
         else

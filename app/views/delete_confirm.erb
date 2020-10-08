@@ -1,1 +1,8 @@
-<h1>Delete <%= !!@item.name ? "this " + @item.name + " benchmark" : "PC " + @item.id %> forever?!</h1>
+<h1>Delete <%= !!@item.name ? @item.name : "PC " + @item.id %> forever?!</h1>
+
+<form method="post" action="/<%= @item.class.to_s.downcase.pluralize %>/<%= @item.id %>">
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="submit" value="Delete?">
+</form>
+
+<h3><a href="/users/<%= session[:user_id] %>">Take me back to saftey!</a></h3>
