@@ -5,7 +5,8 @@ html, body {
 }
 
 body {
-  background-color: rgb(28, 98, 112);
+  background: linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(28,31,54,1) 58%, rgba(81,92,158,1) 100%);
+  background-attachment: fixed;
   color: #333;
   font-family: Sans-Serif;
   line-height: 18px;
@@ -46,6 +47,13 @@ p {
 .main {
   overflow: hidden;
 }
+/* 
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+} */
 
 .content {
   float: left;
@@ -82,9 +90,16 @@ table, td {
 
 th {
   border: 1px solid black;
+  color: #cf3eff;
 }
 
-.center {
-margin-left: auto;
-margin-right: auto;
+#homeLogo {
+  display: block;
+  max-width: 60%;
+  height: auto;
+  margin: auto;
+}
+
+#top-row {
+  background: black;
 }

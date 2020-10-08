@@ -12,15 +12,17 @@
   </head>
   <body>
 
-
+    <div class="center">
+      <a href="/"><img id="homeLogo" src="/images/gamebench_logo.png" alt="Home"></a>
+    </div>
     <div class="wrapper">
-      <a href="/"><h2>Home</h2></a>
+     
       <% if !logged_in? %>
-        <a href="/register">Register</a><br>
-        <a href="/login">Log In</a><br>
+        <h3><a href="/register">Register</a>  || 
+        <a href="/login">Log In</a></h3>
       <% else %>
-        <h4>Welcome <%= current_user.name %></h4>
-        <a href="/logout">Log Out</a><br>
+        <h2>Welcome <%= current_user.name %></h2>
+        <a href="/logout">Log Out</a> ||
         <a href="/users/<%= session[:user_id] %>">View Profile</a><br>
       <% end %>
       <%= yield %>

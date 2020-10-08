@@ -7,6 +7,7 @@ class ApplicationController < Sinatra::Base
     set :views, 'app/views'
     enable :sessions
     set :session_secret, "secret"
+    register Sinatra::Flash
   end
 
   get '/' do
@@ -24,21 +25,6 @@ class ApplicationController < Sinatra::Base
       unless logged_in?
         # message - you need to log in
         redirect '/login'
-      end
-    end
-
-    def redirect_if_not_owner(model_class)
-      redirect_if_not_logged_in
-      if model_class != User
-        owner = model_class.find_by_id(params[:id]).user
-        binding.pry
-        if current_user.id != owner.id
-          # message - you are not the owner
-          redirect '/failure'
-        end
-      elsif current_user != model_class.find_by_id(params[:id])
-        # message - You are not the owner
-        redirect '/failure'
       end
     end
 

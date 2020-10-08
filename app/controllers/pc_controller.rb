@@ -24,8 +24,11 @@ class PcController < ApplicationController
     end
 
     get '/pcs/:id/edit' do
-        redirect_if_not_owner(Pc)
         @pc = Pc.find_by_id(params[:id])
-        erb :'/pc/edit'
+        if @pc.user.id == current_user.id
+            erb :'/pc/edit'
+        else
+            redirect '/failure'
+        end
     end
 end

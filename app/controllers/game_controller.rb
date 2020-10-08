@@ -32,8 +32,11 @@ class GameController < ApplicationController
     end
 
     get '/games/:id/edit' do
-        redirect_if_not_owner(Game)
         @game = Game.find_by_id(params[:id])
-        erb :'/game/edit'
+        if @game.user.id == current_user.id
+            erb :'/game/edit'
+        else
+            redirect '/failure'
+        end
     end
 end

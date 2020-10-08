@@ -33,8 +33,11 @@ class UserController < ApplicationController
     end
 
     get '/users/:id/edit' do
-        redirect_if_not_owner(User)
         @user = User.find_by_id(params[:id])
-        erb :'user/edit'
+        if @user.id == current_user.id
+            erb :'/user/edit'
+        else
+            redirect '/failure'
+        end
     end
 end

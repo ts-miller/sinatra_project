@@ -9,7 +9,7 @@
         <% end %></h2>
     <% if multiple_pcs?() %>
         <table width="90%" class="center">
-            <tr>
+            <tr id="top-row">
                 <th>Name</th>
                 <th>Processor</th>
                 <th>Graphics Card</th>
@@ -55,7 +55,7 @@
         || <a href="/games/new">Add Benchmark</a>
     <% end %></h3>
     <table width="90%" class="center">
-        <tr>
+        <tr id="top-row">
             <th><%= multiple_pcs?('PC') %></th>
             <th>Name</th>
             <th>Quality</th>

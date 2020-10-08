@@ -12,7 +12,7 @@ gem 'pry'
 gem 'bcrypt'
 gem 'tux'
 gem 'faker'
-# gem 'sinatra-flash'
+gem 'sinatra-flash'
 
 group :test do
   gem 'rspec'
