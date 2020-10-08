@@ -14,22 +14,6 @@ class ApplicationController < Sinatra::Base
     erb :home
   end
 
-  # get '/:model/:id/delete' do
-  #   redirect_if_not_logged_in
-  #   @item = params[:model].singularize.capitalize.constantize.find_by_id(params[:id])
-  #   if @item
-  #     if @item.user == current_user
-  #       erb :delete_confirm
-  #     else
-  #       redirect '/login'
-  #     end
-  #   else
-  #     redirect '/failure'
-  #   end
-  # end
-
-
-
   helpers do
 
     def logged_in?
@@ -38,12 +22,24 @@ class ApplicationController < Sinatra::Base
 
     def redirect_if_not_logged_in
       unless logged_in?
+        # message - you need to log in
         redirect '/login'
       end
     end
 
-    def redirect_if_not_owner
-       
+    def redirect_if_not_owner(model_class)
+      redirect_if_not_logged_in
+      if model_class != User
+        owner = model_class.find_by_id(params[:id]).user
+        binding.pry
+        if current_user.id != owner.id
+          # message - you are not the owner
+          redirect '/failure'
+        end
+      elsif current_user != model_class.find_by_id(params[:id])
+        # message - You are not the owner
+        redirect '/failure'
+      end
     end
 
     def current_user
@@ -52,10 +48,6 @@ class ApplicationController < Sinatra::Base
 
     def password_match?
       params[:password] == params[:confirm]
-    end
-
-    def failed_login
-      session[:message] = "The username or password was incorrect. Please Try again!"
     end
 
     def power_supplies

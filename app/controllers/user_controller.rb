@@ -33,6 +33,7 @@ class UserController < ApplicationController
     end
 
     get '/users/:id/edit' do
+        redirect_if_not_owner(User)
         @user = User.find_by_id(params[:id])
         erb :'user/edit'
     end

@@ -23,7 +23,7 @@ class SessionController < ApplicationController
     get '/logout' do
         redirect_if_not_logged_in
         session.clear
-        erb :login
+        redirect '/login'
     end
 
     get '/success' do

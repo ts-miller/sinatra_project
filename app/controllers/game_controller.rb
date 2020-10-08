@@ -1,7 +1,5 @@
 class GameController < ApplicationController
 
-  
-
     post '/games' do
         game = Game.new(params)
 
@@ -34,6 +32,7 @@ class GameController < ApplicationController
     end
 
     get '/games/:id/edit' do
+        redirect_if_not_owner(Game)
         @game = Game.find_by_id(params[:id])
         erb :'/game/edit'
     end

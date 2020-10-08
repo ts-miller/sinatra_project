@@ -7,6 +7,7 @@ class PcController < ApplicationController
         if pc.save
             redirect "/users/#{session[:user_id]}"
         else
+
             redirect '/failure'
         end
     end
@@ -18,10 +19,12 @@ class PcController < ApplicationController
     end
 
     get '/pcs/new' do
+        redirect_if_not_logged_in
         erb :'/pc/new'
     end
 
     get '/pcs/:id/edit' do
+        redirect_if_not_owner(Pc)
         @pc = Pc.find_by_id(params[:id])
         erb :'/pc/edit'
     end
