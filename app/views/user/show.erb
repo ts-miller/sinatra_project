@@ -1,88 +1,108 @@
-<header>
-    <title><%= @user.username %>'s Profile</title>
-</header>
-<body>
-    <h1><%= @user.name %>'s Profile!</h1>
-    <h2>PC<%= multiple_pcs?('s') %> 
-        <% if @user.id == session[:user_id] %>
-            || <a href="/pcs/new">Add PC</a>
-        <% end %></h2>
-    <% if multiple_pcs?() %>
-        <table width="90%" class="center">
-            <tr id="top-row">
-                <th>Name</th>
-                <th>Processor</th>
-                <th>Graphics Card</th>
-                <th>Ram</th>
-                <th>Storage</th>
-                <th>Power Supply</th>
-                <%if current_user == @user %>
-                    <th>&#10003;</th>
-                    <th>&#10003;</th>
-                <% end %>
-            </tr>
-            <% @user.pcs.each do |pc| %>
-                <tr>
-                    <td><%= pc.name ? pc.name : pc.id %></td>
-                    <td><%= pc.cpu_brand %> <%= pc.cpu_model %></td>
-                    <td><%= pc.gpu_brand %> <%= pc.gpu_model %></td>
-                    <td><%= pc.ram %>GB</td>
-                    <td><%= pc.storage_size %> <%= pc.storage_type %></td>
-                    <td><%= pc.psu %> <%= pc.psu_watts %> <%= "|| 80 Plus" if pc.psu_80plus %></td>
-                    <% if @user == current_user %>
-                        <td><a href="/pcs/<%= pc.id %>/edit">Edit</a></td>
-                        <td><form method="post" action="/pcs/<%= pc.id %>">
-                            <input type="hidden" name="_method" value="DELETE">
-                            <input type="submit" value="Delete"></form>
-                        </td>
-                    <% end %>
-                </tr>
-            <% end %>
-        </table>
-    <% else %>
-        <% pc = @user.pcs[0] %>
-        <p><strong>Name/ID: </strong><%= pc.name ? pc.name : pc.id %></p>
-        <p><strong>CPU: </strong><%= pc.cpu_brand %> <%= pc.cpu_model %></p>
-        <p><strong>GPU: </strong><%= pc.gpu_brand %> <%= pc.gpu_model %></p>
-        <p><strong>RAM: </strong><%= pc.ram %> GB</p>
-        <p><strong>Storage: </strong><%= pc.storage_size %> <%= pc.storage_type %></p>
-        <p><strong>PSU: </strong><%= pc.psu %> <%= pc.psu_watts %> <%= "|| 80 Plus" if pc.psu_80plus %></p>
-        <p><strong>AVERAGE FPS: </strong><%= pc.avg_fps %></p>
-    <% end %>
+<% if @user != current_user %>
+<h1><%= @user.name %>'s Profile!</h1>
+<% end %>
 
-    <h3>Game Benchmarks || <a href="/games">View</a>
-    <% if @user.id == session[:user_id] %>
-        || <a href="/games/new">Add Benchmark</a>
-    <% end %></h3>
-    <table width="90%" class="center">
-        <tr id="top-row">
-            <th><%= multiple_pcs?('PC') %></th>
-            <th>Name</th>
-            <th>Quality</th>
-            <th>Resolution</th>
-            <th>Average FPS</th>
-            <% if current_user == @user %>
-                <th>&#10003;</th>
-                <th>&#10003;</th>
+<h2>PC<%= multiple_pcs?('s') %> 
+<% if @user.id == session[:user_id] %>
+    || <a href="/pcs/new">Add PC</a>
+<% end %></h2>
+<% if multiple_pcs?() %>
+<table width="95%">
+    <tr id="top-row">
+        <th>Name</th>
+        <th>Processor</th>
+        <th>Graphics Card</th>
+        <th>Ram</th>
+        <th>Storage</th>
+        <th>Power Supply</th>
+        <%if current_user == @user %>
+            <th>&#10003;</th>
+            <th>&#10003;</th>
+        <% end %>
+    </tr>
+    <% @user.pcs.each do |pc| %>
+        <tr>
+            <td><%= pc.name ? pc.name : pc.id %></td>
+            <td><%= pc.cpu_brand %> <%= pc.cpu_model %></td>
+            <td><%= pc.gpu_brand %> <%= pc.gpu_model %></td>
+            <td><%= pc.ram %>GB</td>
+            <td><%= pc.storage_size %> <%= pc.storage_type %></td>
+            <td><%= pc.psu %> <%= pc.psu_watts %> <%= "|| 80 Plus" if pc.psu_80plus %></td>
+            <% if @user == current_user %>
+                <td><a href="/pcs/<%= pc.id %>/edit">Edit</a></td>
+                <td><form method="post" action="/pcs/<%= pc.id %>">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <input type="submit" value="Delete"></form>
+                </td>
             <% end %>
         </tr>
-        <% @user.games.each do |game| %>
-            <tr>
-                <td><%= multiple_pcs?(game.pc.name ? game.pc.name : game.pc.id) %></td>
-                <td><%= game.name %></td>
-                <td><%= game.quality %></td>
-                <td><%= game.resolution_x %> x <%= game.resolution_y %></td>
-                <td><%= game.avg_fps %></td>
-                <% if @user == current_user %>
-                    <td><a href="/games/<%= game.id %>/edit">Edit</a></td>
-                    <td><form method="post" action="/games/<%= game.id %>">
-                        <input type="hidden" name="_method" value="DELETE">
-                        <input type="submit" value="Delete"></form>
-                    </td>
-                <% end %>
-            </tr>
-        <% end %>
-    </table>
-    
+    <% end %>
+</table>
+<% else %>
 
-</body>
+    <% pc = @user.pcs[0] %>
+    <p><strong>Name/ID: </strong><%= pc.name ? pc.name : pc.id %></p>
+    <p><strong>CPU: </strong><%= pc.cpu_brand %> <%= pc.cpu_model %></p>
+    <p><strong>GPU: </strong><%= pc.gpu_brand %> <%= pc.gpu_model %></p>
+    <p><strong>RAM: </strong><%= pc.ram %> GB</p>
+    <p><strong>Storage: </strong><%= pc.storage_size %> <%= pc.storage_type %></p>
+    <p><strong>PSU: </strong><%= pc.psu %> <%= pc.psu_watts %> <%= "|| 80 Plus" if pc.psu_80plus %></p>
+    <p><strong>AVERAGE FPS: </strong><%= pc.avg_fps %></p>
+    <% if @user == current_user %>
+        <p><a href="/pcs/<%= pc.id %>/edit">Edit</a></p>
+        <form method="post" action="/pcs/<%= @user.pcs[0].id %>">
+        <input type="hidden" name="_method" value="delete">
+        <input type="submit" value="Delete PC">
+        </form>
+    <% end %>
+<% end %>
+
+<h2></h2>
+<h3>Game Benchmarks
+<% if @user.id == session[:user_id] %>
+    || <a href="/games/new">Add Benchmark</a>
+<% end %></h3>
+<table width="95%">
+    <tr id="top-row">
+        <% if multiple_pcs?() %>
+        <th>PC</th>
+        <% end %>
+        <th>Name</th>
+        <th>Quality</th>
+        <th>Resolution</th>
+        <th>Average FPS</th>
+        <% if current_user == @user %>
+            <th>&#10003;</th>
+            <th>&#10003;</th>
+        <% end %>
+    </tr>
+    <% @user.games.each do |game| %>
+        <tr>
+            <% if multiple_pcs?() %>
+            <td><%= game.pc.name ? game.pc.name : game.pc.id %></td>
+            <% end %>
+            <td><%= game.name %></td>
+            <td><%= game.quality %></td>
+            <td><%= game.resolution_x %> x <%= game.resolution_y %></td>
+            <td><%= game.avg_fps %></td>
+            <% if @user == current_user %>
+                <td><a href="/games/<%= game.id %>/edit">Edit</a></td>
+                <td><form method="post" action="/games/<%= game.id %>">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <input type="submit" value="Delete"></form>
+                </td>
+            <% end %>
+        </tr>
+    <% end %>
+</table><br>
+
+<h2></h2>
+<% if @user.id == current_user.id %>
+    <div style="text-align: right">
+        <a href="/users/<%= @user.id %>/edit">Edit Account</a><br><br>
+        <form method="post" action="/users/<%= @user.id %>">
+        <input type="hidden" name="_method" value="delete">
+        <input type="submit" value="Delete Account">
+        </form>
+    </div>
+<% end %>

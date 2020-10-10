@@ -1,39 +1,27 @@
-<!DOCTYPE html>
-<head>
-    <title>Game Bench</title>
-
-</head>
-<body>
-    <h2></h2>
-
-    
-
-    <a href="/pcs/new">Add PC</a> || 
-    <a href="/games/new">Add Benchmark</a><br>
-    <br>
-    <table>
-        <tr id="top-row">
-            <th>Game</th>
-            <th>Avg FPS</th>
-            <th>Settings</th>
-            <th>Resolution</th>
-            <th>Processor</th>
-            <th>Graphics Card</th>
-            <th>Username</th>
-        </tr>
-        <% @games.each do |game| %>
-        <tr>
-            <td><a href="/games/<%= game.id %>"><%= game.name %></a></td>
-            <td><%= game.avg_fps %></td>
-            <td><%= game.quality %></td>
-            <td><%= game.resolution_x %> x <%= game.resolution_y %></td>
-            <td><%= game.pc.cpu_brand %> <%= game.pc.cpu_model %></td>
-            <td><%= game.pc.gpu_brand %> <%= game.pc.gpu_model %></td>
-            <td><a href="/users/<%= game.pc.user.id %>"><%= game.pc.user.username %></a></td>
-            
-        </tr>
-        <% end %>
-    </table>
-</body>
-
-</html>
+<h2>Game Benchmarks || 
+<a href="/pcs/new">Add PC</a> || 
+<a href="/games/new">Add Benchmark</a>
+</h2>
+<table>
+    <tr id="top-row">
+        <th>Game</th>
+        <th>Avg FPS</th>
+        <th>Settings</th>
+        <th>Resolution</th>
+        <th>Processor</th>
+        <th>Graphics Card</th>
+        <th>User</th>
+    </tr>
+    <% @games.each do |game| %>
+    <tr>
+        <td><a href="/games/<%= game.id %>"><%= game.name %></a></td>
+        <td><%= game.avg_fps %></td>
+        <td><%= game.quality %></td>
+        <td><%= game.resolution_x %> x <%= game.resolution_y %></td>
+        <td><%= game.pc.cpu_brand %> <%= game.pc.cpu_model %></td>
+        <td><%= game.pc.gpu_brand %> <%= game.pc.gpu_model %></td>
+        <td><a href="/users/<%= game.pc.user.id %>"><%= game.pc.user.username %></a></td>
+        
+    </tr>
+    <% end %>
+</table>

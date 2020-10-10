@@ -1,1 +1,27 @@
-List of all PCs!
+<h2>All User PCs</h2>
+<table>
+    <tr id="top-row">
+        <th>Name</th>
+        <th>Username</th>
+        <th>Processor</th>
+        <th>Graphics Card</th>
+        <th>Ram</th>
+        <th>Storage</th>
+        <th>Power Supply</th>
+        <th>Benchmarks</th>
+        <th>Avg FPS</th>
+    </tr>
+    <% @pcs.each do |pc| %>
+        <tr>
+            <td><%= pc.name ? pc.name : pc.id %></td>
+            <td><a href="users/<%= pc.user.id %>"><%= pc.user.username %></a></td>
+            <td><%= pc.cpu_brand %> <%= pc.cpu_model %></td>
+            <td><%= pc.gpu_brand %> <%= pc.gpu_model %></td>
+            <td><%= pc.ram %>GB</td>
+            <td><%= pc.storage_size %> <%= pc.storage_type %></td>
+            <td><%= pc.psu %> <%= pc.psu_watts %> <%= "|| 80 Plus" if pc.psu_80plus %></td>
+            <td><%= pc.games.count %></td>
+            <td><%= Game.where("pc_id = #{pc.id}").average(:avg_fps).round(2) %></td>
+        </tr>
+    <% end %>
+</table>

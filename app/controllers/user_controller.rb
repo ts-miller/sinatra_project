@@ -40,4 +40,31 @@ class UserController < ApplicationController
             redirect '/failure'
         end
     end
+
+    delete '/users/:id' do
+        user = User.find_by_id(params[:id])
+        user.destroy
+        redirect "/success"
+    end
+
+    patch '/users/:id' do
+        user = User.find_by_id(params[:id])
+        if user.id == current_user.id
+            if params[:old_password] == ""
+                user.update(name: params[:name])
+                redirect "/users/#{params[:id]}" # Successfully edited Name only
+            elsif user.authenticate(params[:old_password])
+                if password_match?
+                    user.update(name: params[:name], password: params[:password])
+                    redirect "/users/#{params[:id]}" # Successfully edited name and password
+                else
+                    redirect '/failure' # New Passwords don't match
+                end
+            else
+                redirect '/failure' # Password incorrect
+            end
+        end
+        binding.pry
+        redirect '/failure' # route doesn't belong to current user
+    end
 end

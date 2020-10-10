@@ -1,0 +1,32 @@
+<h2>Edit Benchmark</h2>
+
+<form method="post" action="/games/<%= @game.id %>">
+<input type="hidden" name="_method" value="patch">
+    
+    <label for="name">Title: </label><input name="name" value="<%= @game.name %>" required><br><br>
+    
+    <label for="quality">Quality Preset: </label>
+    <select name="quality" required>
+        <option disabled selected value> -- select an option -- </option>
+        <option value="Lowest">Lowest</option>
+        <option value="Low">Low</option>
+        <option value="Medium">Medium</option>
+        <option value="High">High</option>
+        <option value="Highest">Highest</option>
+    </select><br><br>
+    
+    <label for="resolution">Resolution: </label><input type="number" name="resolution_x" value=<%= @game.resolution_x %> required> x 
+    <input type="number" name="resolution_y" value=<%= @game.resolution_y %> required><br><br>
+        
+    <label for="avg_fps">Average FPS: </label><input type="number" name="avg_fps" value=<%= @game.avg_fps %> required><br><br>
+    
+    <label for="pc_id">PC Name/ID: </label>
+    <select name="pc_id" required>
+        <option disabled selected value> -- select an option -- </option>
+        <% @user.pcs.each do |pc| %>
+            <option value=<%= pc.id %>><%= !!pc.name ? pc.name : pc.id %></option>
+        <% end %>
+    </select><br><br>
+    
+    <input type="submit" value="Save Changes">
+</form>

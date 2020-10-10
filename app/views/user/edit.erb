@@ -1,0 +1,10 @@
+<form method="post" action="/users/<%= current_user.id %>">
+<input type="hidden" name="_method" value="patch">
+    <br>
+    <label for="name">Name: </label><input type="text" name="name" value="<%= current_user.name %>" required><br>
+    <h3>Change Password?</h3>
+    <label for="old_password">Current Password: </label><input type="password" name="old_password"><br><br>
+    <label for="new_password">New Password: </label><input type="password" name="password"><br><br>
+    <label for="confirm">Retype New Password: </label><input type="password" name="confirm"><br><br>
+    <input type="submit" value="Save Changes">
+</form>

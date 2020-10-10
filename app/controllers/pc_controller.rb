@@ -1,5 +1,10 @@
 class PcController < ApplicationController
 
+    get '/pcs' do
+        @pcs = Pc.all.reverse
+        erb :'/pc/index'
+    end
+
     post '/pcs' do
         pc = Pc.new(params)
         pc.user_id = session[:user_id]
@@ -30,5 +35,14 @@ class PcController < ApplicationController
         else
             redirect '/failure'
         end
+    end
+
+    patch '/pcs/:id' do
+        params.delete("_method")
+        pc = Pc.find_by_id(params[:id])
+        
+        pc.update(params)
+        redirect "/users/#{pc.user.id}"
+
     end
 end
