@@ -1,5 +1,5 @@
-<% if @user.id != current_user.id %>
-    <h1><%= @user.name %></h1>
+<% if @user.id != session[:user_id] %>
+    <h1><%= @user.username %>'s Profile</h1>
 <% else %>
     <h1>Your Profile</h1>
 <% end %>

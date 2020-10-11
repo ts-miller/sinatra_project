@@ -17,13 +17,15 @@ class UserController < ApplicationController
         if password_match?
             new_user = User.new(name: params[:name], username: params[:username], password: params[:password])
             if new_user.save
+                flash[:success] = "Account Created. Please log in below."
                 redirect '/login'
             else
-                redirect '/failure'
+                flash[:error] = "Username taken. Please choose a unique username."
+                redirect '/register'
             end
         else
             flash[:error] = "Passwords did not match."
-            redirect '/failure'
+            redirect '/register'
         end
     end
 
