@@ -11,8 +11,7 @@ class ApplicationController < Sinatra::Base
   end
 
   get '/' do
-    @games = Game.all.reverse
-    erb :home
+    erb :landing
   end
 
   helpers do

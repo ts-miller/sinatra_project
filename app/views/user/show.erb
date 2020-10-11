@@ -1,5 +1,7 @@
-<% if @user != current_user %>
-<h1><%= @user.name %>'s Profile!</h1>
+<% if @user.id != current_user.id %>
+    <h1><%= @user.name %></h1>
+<% else %>
+    <h1>Your Profile</h1>
 <% end %>
 
 <h2>PC<%= multiple_pcs?('s') %> 
@@ -7,7 +9,7 @@
     || <a href="/pcs/new">Add PC</a>
 <% end %></h2>
 <% if multiple_pcs?() %>
-<table width="95%">
+<table>
     <tr id="top-row">
         <th>Name</th>
         <th>Processor</th>
@@ -49,8 +51,8 @@
     <p><strong>PSU: </strong><%= pc.psu %> <%= pc.psu_watts %> <%= "|| 80 Plus" if pc.psu_80plus %></p>
     <p><strong>AVERAGE FPS: </strong><%= pc.avg_fps %></p>
     <% if @user == current_user %>
-        <p><a href="/pcs/<%= pc.id %>/edit">Edit</a></p>
-        <form method="post" action="/pcs/<%= @user.pcs[0].id %>">
+        <p style="float: left; margin-top: auto"><a href="/pcs/<%= pc.id %>/edit">Edit</a></p>
+        <form style="text-align: right" method="post" action="/pcs/<%= @user.pcs[0].id %>">
         <input type="hidden" name="_method" value="delete">
         <input type="submit" value="Delete PC">
         </form>
@@ -62,7 +64,7 @@
 <% if @user.id == session[:user_id] %>
     || <a href="/games/new">Add Benchmark</a>
 <% end %></h3>
-<table width="95%">
+<table width="100%">
     <tr id="top-row">
         <% if multiple_pcs?() %>
         <th>PC</th>
@@ -97,12 +99,4 @@
 </table><br>
 
 <h2></h2>
-<% if @user.id == current_user.id %>
-    <div style="text-align: right">
-        <a href="/users/<%= @user.id %>/edit">Edit Account</a><br><br>
-        <form method="post" action="/users/<%= @user.id %>">
-        <input type="hidden" name="_method" value="delete">
-        <input type="submit" value="Delete Account">
-        </form>
-    </div>
-<% end %>
+

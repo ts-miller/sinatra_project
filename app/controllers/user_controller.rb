@@ -22,7 +22,7 @@ class UserController < ApplicationController
                 redirect '/failure'
             end
         else
-            # flash[:error] = "Passwords did not match."
+            flash[:error] = "Passwords did not match."
             redirect '/failure'
         end
     end
@@ -52,11 +52,16 @@ class UserController < ApplicationController
         if user.id == current_user.id
             if params[:old_password] == ""
                 user.update(name: params[:name])
-                redirect "/users/#{params[:id]}" # Successfully edited Name only
+                redirect "/users/#{params[:id]}" # Successfully edited name only
             elsif user.authenticate(params[:old_password])
                 if password_match?
-                    user.update(name: params[:name], password: params[:password])
-                    redirect "/users/#{params[:id]}" # Successfully edited name and password
+                    user.name = params[:name]
+                    user.password = params[:password]
+                    if user.save
+                        redirect "/users/#{params[:id]}" # Successfully edited name and password
+                    else
+                        redirect '/failure' # New passwords match but not valid
+                    end
                 else
                     redirect '/failure' # New Passwords don't match
                 end
@@ -64,7 +69,6 @@ class UserController < ApplicationController
                 redirect '/failure' # Password incorrect
             end
         end
-        binding.pry
         redirect '/failure' # route doesn't belong to current user
     end
 end

@@ -1,5 +1,10 @@
 class GameController < ApplicationController
 
+    get '/games' do
+        @games = Game.all.reverse
+        erb :"/game/index"
+    end
+    
     post '/games' do
         game = Game.new(params)
 
