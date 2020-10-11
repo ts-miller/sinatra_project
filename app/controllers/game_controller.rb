@@ -11,7 +11,8 @@ class GameController < ApplicationController
         if game.save
             redirect "users/#{session[:user_id]}"
         else
-            redirect '/failure'
+            flash[:error] = "Make sure all fields are filled out."
+            redirect '/games/new'
         end
     end
 
@@ -25,6 +26,7 @@ class GameController < ApplicationController
         redirect_if_not_logged_in
         @user = User.find_by_id(session[:user_id])
         if @user.pcs.empty?
+            flash[:error] = "You need to add a PC before you can add a benchmark"
             redirect '/pcs/new'
         else
             erb :'/game/new'
@@ -42,6 +44,7 @@ class GameController < ApplicationController
         if @game.pc.user.id == current_user.id
             erb :'/game/edit'
         else
+            flash[:error] = "You don't own this game!"
             redirect '/failure'
         end
     end
@@ -51,6 +54,9 @@ class GameController < ApplicationController
         game = Game.find_by_id(params[:id])
         if game.pc.user.id == current_user.id
             game.update(params)
+            flash[:success] = "Changes Saved"
+        else
+            flash[:error] = "You don't own this game!"
         end
         redirect "/users/#{game.pc.user.id}"
     end

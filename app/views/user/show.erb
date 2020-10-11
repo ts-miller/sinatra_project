@@ -40,8 +40,9 @@
         </tr>
     <% end %>
 </table>
+<% elsif @user.pcs.empty? %>
+    <h1>No PCs added</h1>
 <% else %>
-
     <% pc = @user.pcs[0] %>
     <p><strong>Name/ID: </strong><%= pc.name ? pc.name : pc.id %></p>
     <p><strong>CPU: </strong><%= pc.cpu_brand %> <%= pc.cpu_model %></p>

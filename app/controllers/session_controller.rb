@@ -2,6 +2,7 @@ class SessionController < ApplicationController
 
     get '/login' do
         if logged_in?
+            flash[:error] = "Ummm, you're already logged in.."
             redirect "/user/#{session[:id]}"
         else
             erb :login
@@ -13,6 +14,7 @@ class SessionController < ApplicationController
 
         if user && user.authenticate(params[:password])
             session[:user_id] = user.id
+            flash[:success] = "Successfully logged In"
             redirect "/users/#{current_user.id}"
         else
             flash[:error] = "Username or Password incorrect. Please Try again!"
@@ -23,6 +25,7 @@ class SessionController < ApplicationController
     get '/logout' do
         redirect_if_not_logged_in
         session.clear
+        flash[:success] = "Successfully Logged Out"
         redirect '/login'
     end
 

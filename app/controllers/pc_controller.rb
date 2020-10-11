@@ -10,16 +10,24 @@ class PcController < ApplicationController
         pc.user_id = session[:user_id]
         
         if pc.save
+            flash[:success] = "Added PC successfully"
             redirect "/users/#{session[:user_id]}"
         else
-
-            redirect '/failure'
+            flash[:error] = "Make sure all fields are filled out correctly."
+            redirect '/pcs/new'
         end
     end
 
     delete '/pcs/:id' do
         pc = Pc.find_by_id(params[:id])
+
+        if !pc.games.empty? # Delete games associated with PC
+            pc.games.each do |game|
+                game.destroy
+            end
+        end
         pc.destroy
+        flash[:success] = "PC successfully deleted."
         redirect "/users/#{current_user.id}"
     end
 
@@ -40,9 +48,12 @@ class PcController < ApplicationController
     patch '/pcs/:id' do
         params.delete("_method")
         pc = Pc.find_by_id(params[:id])
-        
-        pc.update(params)
+        if pc.user.id == current_user.id
+            pc.update(params)
+            flash[:success] = "Changes Saved"
+        else
+            flash[:error] = "You don't own this PC!"
+        end
         redirect "/users/#{pc.user.id}"
-
     end
 end
