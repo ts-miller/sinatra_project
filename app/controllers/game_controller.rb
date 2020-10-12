@@ -40,11 +40,10 @@ class GameController < ApplicationController
 
     get '/games/:id/edit' do
         @game = Game.find_by_id(params[:id])
-        @user = User.find_by_id(current_user.id)
-        if @game.pc.user.id == current_user.id
+        @user = User.find_by_id(session[:user_id])
+        if @game.pc.user.id == session[:user_id]
             erb :'/game/edit'
         else
-            flash[:error] = "You don't own this game!"
             redirect '/failure'
         end
     end
@@ -52,7 +51,7 @@ class GameController < ApplicationController
     patch '/games/:id' do
         params.delete("_method")
         game = Game.find_by_id(params[:id])
-        if game.pc.user.id == current_user.id
+        if game.pc.user.id == session[:user_id]
             game.update(params)
             flash[:success] = "Changes Saved"
         else

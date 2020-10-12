@@ -5,7 +5,7 @@ class UserController < ApplicationController
         erb :'user/index'
     end
 
-    get '/register' do # '/users/new'
+    get '/users/register' do # '/users/new'
         if logged_in?
           redirect "/user/#{session[:user_id]}"
         else
@@ -20,12 +20,15 @@ class UserController < ApplicationController
                 flash[:success] = "Account Created. Please log in below."
                 redirect '/login'
             else
-                flash[:error] = "Username taken. Please choose a unique username."
-                redirect '/register'
+                new_user.valid?
+                new_user.errors.messages.each do |k, v|
+                    flash[k] = k.to_s + " " + v[0]
+                end
+                redirect '/users/register'
             end
         else
             flash[:error] = "Passwords did not match."
-            redirect '/register'
+            redirect '/users/register'
         end
     end
 
@@ -36,7 +39,7 @@ class UserController < ApplicationController
 
     get '/users/:id/edit' do
         @user = User.find_by_id(params[:id])
-        if @user.id == current_user.id
+        if @user.id == session[:user_id]
             erb :'/user/edit'
         else
             redirect '/failure'
@@ -64,7 +67,7 @@ class UserController < ApplicationController
 
     patch '/users/:id' do
         user = User.find_by_id(params[:id])
-        if user.id == current_user.id
+        if user.id == session[:user_id]
             if params[:old_password] == ""
                 user.update(name: params[:name])
                 flash[:success] = "Name updated."

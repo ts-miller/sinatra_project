@@ -22,7 +22,7 @@ class ApplicationController < Sinatra::Base
 
     def redirect_if_not_logged_in
       unless logged_in?
-        # message - you need to log in
+        flash[:error] = "You need to be logged in to do that."
         redirect '/login'
       end
     end
@@ -55,7 +55,5 @@ class ApplicationController < Sinatra::Base
         @user.pcs.count > 1
       end
     end
-
   end
-
 end

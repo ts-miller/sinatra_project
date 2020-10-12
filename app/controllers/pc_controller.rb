@@ -38,7 +38,7 @@ class PcController < ApplicationController
 
     get '/pcs/:id/edit' do
         @pc = Pc.find_by_id(params[:id])
-        if @pc.user.id == current_user.id
+        if @pc.user.id == session[:user_id]
             erb :'/pc/edit'
         else
             redirect '/failure'
@@ -48,7 +48,7 @@ class PcController < ApplicationController
     patch '/pcs/:id' do
         params.delete("_method")
         pc = Pc.find_by_id(params[:id])
-        if pc.user.id == current_user.id
+        if pc.user.id == session[:user_id]
             pc.update(params)
             flash[:success] = "Changes Saved"
         else
